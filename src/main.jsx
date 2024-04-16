@@ -1,15 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+
 import { createBrowserRouter, RouterProvider} from 'react-router-dom'
 
 import App from './components/App.jsx'
 import Home from './components/Home.jsx'
-import About from './components/About.jsx'
-import Contact from './components/Contact.jsx'
+import EditNote from './components/EditNote.jsx'
+import Category from './components/Category.jsx'
+import Topic from './components/Topic.jsx'
+import Add from './components/Add.jsx'
+import TextBox from './components/TextBox.jsx'
 import './index.css'
-import Portfolio from './components/Portfolio.jsx'  
-import PortfolioItem from './components/PortfolioItem.jsx'
-import Bio from './components/Bio.jsx'
 
 const router = createBrowserRouter([
   {
@@ -21,28 +22,28 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "about",
-        element: <About />,
+        path: "add",
+        element: <Add />
+      },
+      {
+        path: "c/:category",
+        element: <Category />,
         children: [
           {
-            path: 'portfolio',
-            element: <Portfolio />
-          },
-          {
-            path: "portfolio/:id",
-            element: <PortfolioItem />
-          },
-          {
-            path: "bio",
-            element: <Bio />
+            path: "t/:topic",
+            element: <Topic />
           }
         ]
       },
       {
-        path: "contact",
-        element: <Contact />
+        path: "n/:id",
+        element: <EditNote />
       }
     ]
+  },
+  {
+    path: "/text",
+    element: <TextBox />
   }
 ])
 
