@@ -10,6 +10,9 @@ a {
 .notecard > div:empty {
   display: none;
 }
+#notes-container > * {
+  margin: 20px;
+}
 
 /* Form */
 

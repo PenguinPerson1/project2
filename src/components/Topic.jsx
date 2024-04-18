@@ -38,7 +38,7 @@ export default function Topic(){
         onChange={changeFavorite}
         checked={favorite!==undefined}
       />
-      <CardGroup>
+      <CardGroup centered id='notes-container'>
         {structure.get(params.topic).values().toArray().map(card=><NoteCard key={card.id} noteCard={card} />)}
       </CardGroup>
     </>
