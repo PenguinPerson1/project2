@@ -51,13 +51,14 @@ export default function EditNote(){
           })
           .then(r=>r.json())
           .then(newFav => setFavorites(favs=>favs.map(fav=>fav.id===newFav.id? newFav : fav)))
+          
+        case 'last':
+        case 'back':
           if (prev==="topic") {
             navigate(`/c/${data.category}/t/${data.topic}`)
             break;
           }
-        case 'last':
-        case 'back':
-          if(prev==="gen") { navigate('/n') }
+          else if(prev==="gen") { navigate('/n') }
           else{ navigate(-1) }
           break;
         default:

@@ -118,14 +118,19 @@
       "topic": "forms"
     },
     {
-      "id": "dfe4",
-      "category": "React",
-      "topic": "structure"
-    },
-    {
       "id": "b529",
       "category": "JavaScript",
       "topic": "mouse"
+    },
+    {
+      "id": "bcf4",
+      "category": "JavaScript",
+      "topic": "objects"
+    },
+    {
+      "id": "607a",
+      "category": "React",
+      "topic": "structure"
     }
   ]
 }
