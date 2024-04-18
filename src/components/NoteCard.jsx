@@ -9,7 +9,7 @@ export default function NoteCard({noteCard}) {
       <CardContent description={noteCard.text} />
       <CardContent extra>
         {noteCard.links.map((links,i)=>(
-          <a href={links[1]} key={i}>{links[0]}</a>
+          <a href={links[1]} key={i} onClick={e=>e.stopPropagation()}>{links[0]}</a>
         ))}
       </CardContent>
     </Card>
