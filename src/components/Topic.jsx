@@ -1,4 +1,5 @@
 import { useParams, useOutletContext } from 'react-router-dom'
+import { CardGroup, Icon, Checkbox } from 'semantic-ui-react'
 import NoteCard from './NoteCard'
 
 export default function Topic(){
@@ -28,11 +29,18 @@ export default function Topic(){
   }
   return(
     <>
-      <h2>Topic {params.topic}</h2>
-      <input type='checkbox' checked={favorite!==undefined} onChange={changeFavorite}/>
-      <div id='cards-container'>
-        {Object.values(structure[params.topic]).map(card=><NoteCard key={card.id} noteCard={card} />)}
-      </div>
+      <Checkbox 
+        label={
+          favorite!==undefined ? 
+          <Icon color='yellow' name='star'/> :
+          <Icon name='star outline'/>
+        } 
+        onChange={changeFavorite}
+        checked={favorite!==undefined}
+      />
+      <CardGroup>
+        {structure.get(params.topic).values().toArray().map(card=><NoteCard key={card.id} noteCard={card} />)}
+      </CardGroup>
     </>
   )
 }

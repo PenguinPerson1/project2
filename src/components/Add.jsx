@@ -42,10 +42,7 @@ export default function Add() {
       topic: "",
       title: "",
       text: "",
-      links: [
-        [],
-        []
-      ]
+      links: []
     }}
     onSubmit={handleSubmit}
     />

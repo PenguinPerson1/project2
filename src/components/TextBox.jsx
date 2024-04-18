@@ -1,6 +1,4 @@
 import { useState } from "react";
-import sanitizeHtml from 'sanitize-html';
-
 
 export default function TextBox() {
   const [text,setText] = useState("")
@@ -15,15 +13,6 @@ export default function TextBox() {
     //   
     // }
   }
-  /* 
-  const clean = sanitizeHtml(dirty, {
-  allowedTags: [ 'b', 'i', 'em', 'strong', 'a' ],
-  allowedAttributes: {
-    'a': [ 'href' ]
-  },
-  allowedIframeHostnames: ['www.youtube.com']
-});
-*/
 
   /* document.addEventListener("keypress", event => {
     if(event.key === "h"){

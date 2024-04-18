@@ -1,5 +1,5 @@
-import { NavLink, useParams, Outlet, useOutletContext } from 'react-router-dom'
-
+import { useParams, Outlet, useOutletContext } from 'react-router-dom'
+import NavBar from './NavBar'
 
 export default function Category(){
   const params = useParams()
@@ -7,11 +7,11 @@ export default function Category(){
   const categoryCards = cardList.filter(card=>card.category===params.category)
   return(
     <>
-      <h1>Category {params.category}</h1>
-      {Object.keys(structure[params.category]).map((topic,i)=>(
-        <NavLink className="nav-link" key={i} to={`/c/${params.category}/t/${topic}`} >{topic}</NavLink>
-      ))}
-      <Outlet context={{categoryCards:categoryCards,structure:structure[params.category],favorites:favorites,setFavorites:setFavorites}} />
+      <NavBar navLinks={
+        structure.get(params.category).keys().toArray().map(top=>{
+          return{name:top,id:top,navi:`/c/${params.category}/t/${top}`}})
+      } type={{text:true}} />
+      <Outlet context={{categoryCards:categoryCards,structure:structure.get(params.category),favorites:favorites,setFavorites:setFavorites}} />
     </>
   )
 }

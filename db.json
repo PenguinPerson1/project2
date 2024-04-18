@@ -1,23 +1,6 @@
 {
   "Notes": [
     {
-      "id": "S",
-      "category": "JavaScript",
-      "topic": "objects",
-      "title": "How to Navigate with Components",
-      "text": "a bunch of text I don't want to write out",
-      "links": [
-        [
-          "A Real Website",
-          "http://aLinkThatIsTotallyReal"
-        ],
-        [
-          "Another Real Website",
-          "http://anotherRealLink"
-        ]
-      ]
-    },
-    {
       "id": "6b52",
       "category": "JavaScript",
       "topic": "mouse",
@@ -120,43 +103,29 @@
       ]
     },
     {
-      "id": "28ae",
-      "category": "Testing",
-      "topic": "test",
-      "title": "testing edit",
-      "text": "test",
-      "links": [
-        [],
-        []
-      ]
-    },
-    {
       "id": "bce4",
       "category": "React",
       "topic": "structure",
       "title": "The DOM as a Tree",
       "text": "Throughout React, elements are usually always structured in a tree, with the parent element passing down props to the child components, and the child components returning information when functions are passed to them. You have to pass up and down the tree, you can't pass from a component to its sibling",
-      "links": [
-        [],
-        []
-      ]
+      "links": []
     }
   ],
   "Favorites": [
-    {
-      "id": 195,
-      "category": "JavaScript",
-      "topic": "mouse"
-    },
     {
       "id": "b0db",
       "category": "CSS",
       "topic": "forms"
     },
     {
-      "id": "ea30",
-      "category": "Testing",
-      "topic": "test"
+      "id": "dfe4",
+      "category": "React",
+      "topic": "structure"
+    },
+    {
+      "id": "b529",
+      "category": "JavaScript",
+      "topic": "mouse"
     }
   ]
 }

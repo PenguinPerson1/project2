@@ -1,10 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { MenuItem, Menu } from 'semantic-ui-react'
 
-export default function NavBar() {
+export default function NavBar({navLinks,type,addHome}) {
   return (
-    <div>
-      <NavLink className="nav-link" to="/">Home</NavLink>
-      <NavLink className="nav-link" to="/add">Add</NavLink>
-    </div>
+    <>
+      {addHome && <Link id="site-title" to={'/'}><h1>Notes</h1></Link> }
+      <Menu {...type}>
+        {navLinks.map(n=><MenuItem key={n.id} as={NavLink} to={n.navi} name={n.name}/>)}
+      </Menu>
+    </>
   )
 }

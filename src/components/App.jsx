@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, Link } from 'react-router-dom'
 import NavBar from './NavBar'
 
 function App() {
@@ -21,26 +21,33 @@ function App() {
     })
     .catch(error=>console.log(error))
   },[])
-  const structure = cardList.reduce((acc, ca) => {
-    if (Object.hasOwn(acc, ca.category)) {
-      if (Object.hasOwn(acc[ca.category], ca.topic)) {
-        acc[ca.category][ca.topic]={...acc[ca.category][ca.topic], [ca.id]: ca }
-        return acc;
+  const structure = new Map()
+  cardList.forEach(ca=>{
+    if(structure.has(ca.category)){
+      if (structure.get(ca.category).has(ca.topic)) {
+        structure.get(ca.category).get(ca.topic).set(ca.id,ca)
       }
-      acc[ca.category] = { ...acc[ca.category], [ca.topic]: {[ca.id]: ca} };
-      return acc
+      else{
+        structure.get(ca.category).set(ca.topic,new Map([[ca.id,ca]]))
+      }
     }
-    return { ...acc, [ca.category]: { [ca.topic]: {[ca.id]: ca} } };
-  }, {});
-  return (
-    <>
-      <NavBar />
-      <div id="categories">
-        {Object.keys(structure).map((cat,i)=><NavLink className="nav-link" to={`/c/${cat}`} key={i}>{cat}</NavLink>)}
-      </div>
-      {!toggleLoading && <Outlet context={{cardList: cardList, structure: structure, setCardList:setCardList, favorites: favorites, setFavorites: setFavorites}} />}
-    </>
-  )
+    else{
+      structure.set(ca.category,new Map([[ca.topic,new Map([[ca.id,ca]])]]))
+    }
+  })
+
+  if(!toggleLoading){
+    return (
+      <>
+        <NavBar navLinks={[
+          { name: "Add Note", id: "add", navi: "/add" },
+          { name: "View Notes", id: "view", navi: `/c` },
+          { name: "Edit Note", id: "edit", navi: "/n" }
+        ]} type={{tabular:true}} addHome={true}/>
+        <Outlet context={{cardList: cardList, structure: structure, setCardList:setCardList, favorites: favorites, setFavorites: setFavorites}} />
+      </>
+    )
+  }
 }
 
 export default App

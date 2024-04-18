@@ -1,9 +1,16 @@
-import {useState} from 'react'
-export default function NoteForm({cardList,card,onSubmit}) {
-
+import {useState, useEffect} from 'react'
+import { GridColumn, Grid, Form, FormTextArea, FormInput, FormButton, FormGroup, Button } from 'semantic-ui-react'
+import FormLink from './FormLink'
+export default function NoteForm({cardList,card,onSubmit,handleDelete}) {
   const [linkData,setLinkData] = useState([...card.links])
   const [formData,setFormData] = useState({...card})
   const [formLinks,setFormLinks] = useState({ link_url:"",link_text:"" })
+
+  useEffect(()=>{
+    setLinkData([...card.links])
+    setFormData({...card})
+    setFormLinks({ link_url:"",link_text:"" })
+  },[card])
 
   const categories = new Set([])
   cardList.forEach(card => { categories.add(card.category) });
@@ -22,46 +29,49 @@ export default function NoteForm({cardList,card,onSubmit}) {
     setLinkData([...linkData,[formLinks.link_text,formLinks.link_url]])
     setFormLinks({...formLinks, link_url: "", link_text: ""})
   }
-  function removeLink() {
-    setLinkData(linkData.slice(0,-1))
+  function removeLink(i) {
+    setLinkData(linkData.toSpliced(i,1))
   }
   function handleSubmit(e){
     e.preventDefault()
     onSubmit(formData,setFormData,linkData)
   }
-
   return (
-    <div id='form-container'>
-      <form id="form" onSubmit={handleSubmit}>
-        <label htmlFor="category">Category:</label>
-        <input id='category' list='categories' type="category" name="category" onChange={handleChange} value={formData.category}/>
-        <datalist id = 'categories'>
-          {[...categories].map((cat,i) => <option key={i} value={cat} />)}
-        </datalist>
-        <label htmlFor="topic">Topic:</label>
-        <input id='topic' list='topics' type="text" name="topic" onChange={handleChange} value={formData.topic}/>
-        <datalist id = 'topics'>
-          {[...topics].map((top,i) => <option key={i} value={top} />)}
-        </datalist>
-        <label htmlFor="title">Note Summary:</label>
-        <input id='title' type="text" name="title" placeholder="Enter Summary" required={true} onChange={handleChange} value={formData.title}/>
-        <br />
-        <label htmlFor="text" required={true}>Note Text:</label>
-        <textarea id='text' name="text" cols="30" rows="5" placeholder="Enter Note" onChange={handleChange} value={formData.text}/>
-        <button type="submit">Submit</button>
-      </form>
-      <form id="form-links" onSubmit={addLink}>
-        <label htmlFor="link_text">Link Text:</label>
-        <input id= "link_text" type="text" name="link_text" required={true} onChange={handleLinkChange} value={formLinks.link_text}/>
-        <button type="button" onClick={removeLink}>Delete</button> 
-        <label htmlFor="link_url">Link Url:</label>
-        <input id='link_url' type="text" name="link_url" required={true} onChange={handleLinkChange} value={formLinks.link_url}/>
-        <input type="submit" value="Add"></input>
-        <br />
+    <Grid id='form-container'>
+      <GridColumn width={10}>
+      <h3>Decide Note Content:</h3>
+        <Form onSubmit={handleSubmit}>
+          <FormGroup widths={'equal'}>
+            <FormInput fluid label="Category:" list='categories' name='category' onChange={handleChange} value={formData.category} required={true} />
+            <datalist id = 'categories'>
+              {[...categories].map((cat,i) => <option key={i} value={cat} />)}
+            </datalist>
+            <FormInput fluid label="Topic:" list='topics' name='topic' onChange={handleChange} value={formData.topic} required={true} />
+            <datalist id = 'topics'>
+              {[...topics].map((top,i) => <option key={i} value={top} />)}
+            </datalist>
+          </FormGroup>
+          <FormGroup>
+            <FormInput label="Title:" name="title" placeholder="Add a Title" required={true} onChange={handleChange} value={formData.title} />
+          </FormGroup>
+          <FormGroup >
+            <FormTextArea width={16} rows={8} label="Text:" name="text" placeholder="Add the Note" required={true} onChange={handleChange} value={formData.text} />
+          </FormGroup>
+          <FormButton fluid>Submit</FormButton>
+          {handleDelete!==undefined && <Button fluid onClick={handleDelete}>Delete Note</Button>}
+        </Form>
+      </GridColumn>
+      <GridColumn width={5}>
+        <h3>Add Links:</h3>
+        <Form onSubmit={addLink}>
+          <FormInput label='Link Text:' name="link_text" required={true} onChange={handleLinkChange} value={formLinks.link_text}/>
+          <FormInput label='Link URL:' name="link_url" required={true} onChange={handleLinkChange} value={formLinks.link_url}/>
+          <FormButton>Add</FormButton>
+        </Form>
         <ul id="links-display">
-          {linkData.map((link,i)=><a href={link[1]} key={i}>{link[0]}</a>)}
+          {linkData.map((link,i)=><FormLink key={i} link={link} i={i} removeLink={removeLink}/>)}
         </ul>
-      </form>
-    </div>
+      </GridColumn>
+    </Grid>
   )
 }
